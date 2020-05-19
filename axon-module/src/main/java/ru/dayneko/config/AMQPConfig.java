@@ -8,8 +8,6 @@ import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
-
 @Configuration
 @Data
 public class AMQPConfig {
@@ -23,11 +21,10 @@ public class AMQPConfig {
     @Value("${broker.fanout.autodelete}")
     private boolean autodelete;
 
-    private final RabbitProperties rabbitProperties;
+    private RabbitProperties rabbitProperties;
 
-    @PostConstruct
-    public void dsd() {
-        System.out.println(baseRoute + " " + baseQueue + " " + autodelete);
+    public AMQPConfig(RabbitProperties rabbitProperties) {
+        this.rabbitProperties = rabbitProperties;
     }
 
     @Bean
