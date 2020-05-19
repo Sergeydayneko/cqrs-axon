@@ -1,0 +1,10 @@
+server:
+  port: ${AXON_MODULE_PORT:7777}
+
+broker:
+  fanout:
+    autodelete: ${FANOUT_AUTO_DELETE:true}
+  routes:
+    base: ${RABBIT_BASE_ROUTE:common_route}
+  queues:
+    base: ${RABBIT_BASE_QUEUE:common_queue}
