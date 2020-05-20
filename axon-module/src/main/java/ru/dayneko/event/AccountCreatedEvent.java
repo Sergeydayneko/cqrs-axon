@@ -2,6 +2,9 @@ package ru.dayneko.event;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Event for confirmation of creation
+ */
 public class AccountCreatedEvent extends Event<String> {
 
     private final double accountBalance;

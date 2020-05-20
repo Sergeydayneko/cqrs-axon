@@ -2,6 +2,9 @@ package ru.dayneko.comand;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Command for creating account
+ */
 public class CreateAccountCommand extends Command<String> {
 
     private final double accountBalance;
