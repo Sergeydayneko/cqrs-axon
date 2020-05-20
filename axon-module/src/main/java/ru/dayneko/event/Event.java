@@ -1,5 +1,7 @@
 package ru.dayneko.event;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Base Event for extending
  *
@@ -7,6 +9,7 @@ package ru.dayneko.event;
  */
 public class Event<T> {
 
+    @NotNull
     private final T id;
 
     protected Event(T id) {

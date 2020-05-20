@@ -1,15 +1,18 @@
 package ru.dayneko.event;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Credit money from account event
  */
-public class MoneyCreditedEvent extends Event<String> {
+public class CreditMoneyEvent extends Event<String> {
 
     private final double creditAmount;
 
+    @NotNull
     private final String currency;
 
-    public MoneyCreditedEvent(String id, double creditAmount, String currency) {
+    public CreditMoneyEvent(String id, double creditAmount, String currency) {
         super(id);
         this.creditAmount = creditAmount;
         this.currency = currency;

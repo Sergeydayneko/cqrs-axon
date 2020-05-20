@@ -8,10 +8,8 @@ import org.axonframework.spring.stereotype.Aggregate;
 import ru.dayneko.comand.ActivateAccountCommand;
 import ru.dayneko.comand.CreateAccountCommand;
 import ru.dayneko.comand.CreditMoneyCommand;
-import ru.dayneko.event.AccountCreatedEvent;
-import ru.dayneko.event.ActivateAccountEvent;
-import ru.dayneko.event.MoneyCreditedEvent;
-import ru.dayneko.event.RejectCreditEvent;
+import ru.dayneko.comand.DebitMoneyCommand;
+import ru.dayneko.event.*;
 import ru.dayneko.utils.Reason;
 import ru.dayneko.utils.Status;
 
@@ -46,7 +44,7 @@ public class AccountAggregate {
     @CommandHandler
     public AccountAggregate(@NotNull CreateAccountCommand createAccountCommand) {
         AggregateLifecycle.apply(
-                new AccountCreatedEvent(
+                new CreateAccountEvent(
                         createAccountCommand.getId()
                         , createAccountCommand.getAccountBalance()
                         , createAccountCommand.getCurrency()
@@ -57,7 +55,7 @@ public class AccountAggregate {
     @CommandHandler
     protected void on(CreditMoneyCommand creditMoneyCommand){
         AggregateLifecycle.apply(
-                new MoneyCreditedEvent(
+                new CreditMoneyEvent(
                         creditMoneyCommand.getId()
                         , creditMoneyCommand.getCreditAmount()
                         , creditMoneyCommand.getCurrency()
@@ -72,35 +70,53 @@ public class AccountAggregate {
         );
     }
 
+    @CommandHandler
+    protected void DebitMoneyCommand(DebitMoneyCommand debitMoneyCommand) {
+        AggregateLifecycle.apply(
+                new DebitMoneyEvent(
+                        debitMoneyCommand.getId()
+                        , debitMoneyCommand.getDebitAmount()
+                        , debitMoneyCommand.getCurrency()
+                )
+        );
+    }
+
     /**
      ************* Event Handlers*************
      */
 
     @EventSourcingHandler
-    protected void on(AccountCreatedEvent accountCreatedEvent){
-        this.id = accountCreatedEvent.getId();
-        this.accountBalance = accountCreatedEvent.getAccountBalance();
-        this.currency = accountCreatedEvent.getCurrency();
+    protected void on(CreateAccountEvent createAccountEvent){
+        this.id = createAccountEvent.getId();
+        this.accountBalance = createAccountEvent.getAccountBalance();
+        this.currency = createAccountEvent.getCurrency();
         this.status =  Status.CREATED;
     }
 
-
-
     @EventSourcingHandler
-    protected void on(MoneyCreditedEvent moneyCreditedEvent) {
+    protected void on(CreditMoneyEvent creditMoneyEvent) {
         if (status == CREATED) {
-            AggregateLifecycle.apply(new RejectCreditEvent(moneyCreditedEvent.getId(), Reason.NOT_ACTIVATED));
+            AggregateLifecycle.apply(new RejectCreditEvent(creditMoneyEvent.getId(), Reason.NOT_ACTIVATED));
         }
 
         if (status == BLOCKED) {
-            AggregateLifecycle.apply(new RejectCreditEvent(moneyCreditedEvent.getId(), Reason.BLOCKED));
+            AggregateLifecycle.apply(new RejectCreditEvent(creditMoneyEvent.getId(), Reason.BLOCKED));
         }
 
-        if (accountBalance < 0 || (accountBalance - moneyCreditedEvent.getCreditAmount()) < 0) {
-            AggregateLifecycle.apply(new RejectCreditEvent(moneyCreditedEvent.getId(), Reason.INSUFFICIENT_FUNDS));
+        if (accountBalance < 0 || (accountBalance - creditMoneyEvent.getCreditAmount()) < 0) {
+            AggregateLifecycle.apply(new RejectCreditEvent(creditMoneyEvent.getId(), Reason.INSUFFICIENT_FUNDS));
         }
 
-        accountBalance += moneyCreditedEvent.getCreditAmount();
+        accountBalance += creditMoneyEvent.getCreditAmount();
+    }
+
+    @EventSourcingHandler
+    protected void on(DebitMoneyEvent debitMoneyEvent) {
+        double debitAmount = debitMoneyEvent.getDebitAmount();
+
+        if (debitAmount > 0) {
+            accountBalance += debitAmount;
+        }
     }
 
     @EventSourcingHandler
