@@ -1,6 +1,5 @@
 package ru.dayneko.config;
 
-import lombok.Data;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@Data
 public class AMQPConfig {
 
     @Value("${broker.routes.base}")
@@ -21,7 +19,7 @@ public class AMQPConfig {
     @Value("${broker.fanout.autodelete}")
     private boolean autodelete;
 
-    private RabbitProperties rabbitProperties;
+    private final RabbitProperties rabbitProperties;
 
     public AMQPConfig(RabbitProperties rabbitProperties) {
         this.rabbitProperties = rabbitProperties;
