@@ -23,7 +23,26 @@
         </dependency>
 
         <dependency>
-                <groupId>org.axonframework</groupId>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-test</artifactId>
+            <version>${axon.app.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring-boot-autoconfigure</artifactId>
+            <version>${axon.app.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-amqp</artifactId>
+            <version>${axon.app.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
             <artifactId>axon-spring-boot-starter</artifactId>
             <version>${axon.app.version}</version>
         </dependency>
@@ -39,24 +58,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.axonframework</groupId>-->
-            <!--<artifactId>axon-test</artifactId>-->
-            <!--<version>${axon.app.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
 
-        <!--<dependency>-->
-            <!--<groupId>org.axonframework</groupId>-->
-            <!--<artifactId>axon-spring-boot-autoconfigure</artifactId>-->
-            <!--<version>${axon.app.version}</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.axonframework</groupId>-->
-            <!--<artifactId>axon-amqp</artifactId>-->
-            <!--<version>${axon.app.version}</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
