@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class ActivateAccountCommand extends Command<String> {
 
     @NotNull
-    private Status status;
+    private final Status status;
 
     public ActivateAccountCommand(String id, Status status) {
         super(id);

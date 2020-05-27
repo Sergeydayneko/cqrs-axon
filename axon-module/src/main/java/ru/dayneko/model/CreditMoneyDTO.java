@@ -4,26 +4,24 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**
- * DTO for deposit money into an account
+ * DTO for credit money from account
  */
-public class DebitMoneyDTO {
+public class CreditMoneyDTO {
     private final String id;
 
-    private final double debitAmount;
+    private final double creditAmount;
 
     @NotNull
     private final String currency;
 
-    public DebitMoneyDTO(double debitAmount, @NotNull String currency) {
-        if (debitAmount < 0) throw new IllegalStateException("Money deposited to the account must be a positive number");
-
-        this.debitAmount = debitAmount;
+    public CreditMoneyDTO(double creditAmount, @NotNull String currency) {
+        this.creditAmount = creditAmount;
         this.currency = currency;
         this.id = UUID.randomUUID().toString();
     }
 
     public double getDebitAmount() {
-        return debitAmount;
+        return creditAmount;
     }
 
     public String getCurrency() {

@@ -1,7 +1,6 @@
 package ru.dayneko.config;
 
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.annotation.Bean;
@@ -48,11 +47,5 @@ public class AMQPConfig {
                 .to(exchange)
                 .with(baseRoute)
                 .noargs();
-    }
-
-    @RabbitListener(queues = "common_queue")
-    public void listTest(String message) {
-        System.out.println(" I GOUT MSG " + message);
-
     }
 }
