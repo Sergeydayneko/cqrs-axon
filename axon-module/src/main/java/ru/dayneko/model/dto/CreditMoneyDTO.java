@@ -1,4 +1,4 @@
-package ru.dayneko.model;
+package ru.dayneko.model.dto;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;

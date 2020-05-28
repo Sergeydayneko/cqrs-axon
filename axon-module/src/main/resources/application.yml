@@ -1,10 +1,42 @@
 server:
-  port: ${AXON_MODULE_PORT:7777}
+  port: ${AXON_MODULE_PORT}
 
-broker:
-  fanout:
-    autodelete: ${FANOUT_AUTO_DELETE:true}
-  routes:
-    base: ${RABBIT_BASE_ROUTE:common_route}
-  queues:
-    base: ${RABBIT_BASE_QUEUE:common_queue}
+spring:
+  cloud:
+    config:
+      uri: ${CONFIG_SERVICE_URI}
+      label: master
+      username: ${SECURITY_USERNAME}
+      password: ${SECURITY_PASSWORD}
+      fail-fast: true
+      retry:
+        initial-interval: 10
+        max-attempts: 2
+  rabbitmq:
+    host: ${RABBITMQ_SERVER_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+
+  data:
+    mongodb:
+      uri: ${MONGODB_URL}
+      database: ${MONGODB_DATABASE}
+
+axon:
+  amqp:
+    exchange: product.events.fanout.exchange
+    transaction-mode: none
+    durable-messages: true
+
+external:
+  event-sourcing:
+    events-collection-name: service-events
+    snapshot-collection-name: service-events-snapshots
+  amqp:
+    exchange:
+      fanout:
+        auto-delete: false
+    bind:
+      route-key: "*"
+    queue: product.default.queue

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.dayneko.comand.ActivateAccountCommand;
 import ru.dayneko.comand.DebitMoneyCommand;
-import ru.dayneko.model.CreateAccountModelDTO;
-import ru.dayneko.model.CreditMoneyDTO;
-import ru.dayneko.model.DebitMoneyDTO;
+import ru.dayneko.model.dto.CreateAccountModelDTO;
+import ru.dayneko.model.dto.CreditMoneyDTO;
+import ru.dayneko.model.dto.DebitMoneyDTO;
 import ru.dayneko.utils.Status;
 
 import javax.validation.Valid;
@@ -21,13 +21,12 @@ import java.util.function.Function;
 
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/account/command")
 public class AccountCommandController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @NotNull
-    private final CommandGateway commandGateway;
+    private final @NotNull CommandGateway commandGateway;
 
     public AccountCommandController(CommandGateway commandGateway) {
         this.commandGateway = commandGateway;
@@ -68,7 +67,7 @@ public class AccountCommandController {
                 });
     }
 
-    @PostMapping
+    @PostMapping("/credit")
     public CompletableFuture<String> credit(@RequestBody @Valid CreditMoneyDTO creditMoneyDTO) {
         CompletableFuture<String> completableFuture =
                 CompletableFuture.supplyAsync(() ->

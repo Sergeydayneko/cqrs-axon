@@ -33,8 +33,7 @@ public class AXONConfig {
 
     @Autowired
     public void configure(EventHandlingConfiguration eventHandlingConfiguration, SpringAMQPMessageSource springAMQPMessageSource) {
-        eventHandlingConfiguration.registerSubscribingEventProcessor("events_1", conf -> springAMQPMessageSource);
-        eventHandlingConfiguration.registerSubscribingEventProcessor("events_2", conf -> springAMQPMessageSource);
+        eventHandlingConfiguration.registerSubscribingEventProcessor("accountProcessingGroup", conf -> springAMQPMessageSource);
     }
 
     @Bean

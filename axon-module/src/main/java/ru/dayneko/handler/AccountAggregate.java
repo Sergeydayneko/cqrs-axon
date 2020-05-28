@@ -1,4 +1,4 @@
-package ru.dayneko.aggregate;
+package ru.dayneko.handler;
 
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
@@ -14,6 +14,7 @@ import ru.dayneko.utils.Reason;
 import ru.dayneko.utils.Status;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 import static ru.dayneko.utils.Status.BLOCKED;
 import static ru.dayneko.utils.Status.CREATED;
@@ -23,7 +24,8 @@ import static ru.dayneko.utils.Status.CREATED;
  * command and events handling
  */
 @Aggregate
-public class AccountAggregate {
+public class AccountAggregate implements Serializable {
+
     @AggregateIdentifier
     private String id;
 
@@ -107,6 +109,8 @@ public class AccountAggregate {
             AggregateLifecycle.apply(new RejectCreditEvent(creditMoneyEvent.getId(), Reason.INSUFFICIENT_FUNDS));
         }
 
+        AggregateLifecycle.apply(new ApprovedCreditMonetEvent(creditMoneyEvent));
+
         accountBalance += creditMoneyEvent.getCreditAmount();
     }
 
@@ -117,11 +121,6 @@ public class AccountAggregate {
         if (debitAmount > 0) {
             accountBalance += debitAmount;
         }
-    }
-
-    @EventSourcingHandler
-    protected void on(RejectCreditEvent rejectCreditEvent) {
-        // save in event store
     }
 
     public String getId() {
