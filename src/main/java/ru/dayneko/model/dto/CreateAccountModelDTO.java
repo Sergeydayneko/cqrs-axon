@@ -3,6 +3,9 @@ package ru.dayneko.model.dto;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+/**
+ * DTO Model of created account
+ */
 public class CreateAccountModelDTO {
     private final String id;
 

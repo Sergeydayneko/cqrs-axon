@@ -5,6 +5,9 @@ import ru.dayneko.utils.Status;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Transfer object for account entity
+ */
 public class AccountDTO {
     private String id;
 

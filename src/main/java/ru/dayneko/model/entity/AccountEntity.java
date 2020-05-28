@@ -7,6 +7,9 @@ import ru.dayneko.utils.Status;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+/**
+ * Account entity object
+ */
 @Document(collection = "account")
 public class AccountEntity {
     @Id
