@@ -26,6 +26,8 @@ Additional Dependencies:
 
 2. **Mongodb** was used as a repository
 
+3. **Spring cloud config server** for application variables
+
 The service is a demonstration for reproducing the idea of building **architecture through an event model** and 
 using the **CQRS** pattern. In an ideal presentation, the request and command services should be separated (or the project should be modular),
  but since the demo service is not necessary.
