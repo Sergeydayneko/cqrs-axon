@@ -20,6 +20,16 @@ After that you can start your app and see what the axon saw your application (on
 
 Each event will be created on the axon server board.
 
+Basic concepts:
+
+Command - object with filled information 
+
+Aggregate -  is a set of the value object and entities. The unit has transactional consistency. All objects included in a single whole.
+
+@Aggregate - this is a bean of spring. It represents the current state of the Unit for validating commands in it.
+
+@TargetAggregateIdentifier  - needed in order for the command to send the ID of the unit to which the event arrived to the gateway
+
 Additional Dependencies:
 
 1. As an event bus for interaction between different parts of the program was used **RabbitMQ**.
