@@ -19,7 +19,8 @@ import org.springframework.context.annotation.Scope;
  */
 @Configuration
 public class AXONConfig {
-
+    
+    /* Settings for message handling order */
     @Bean
     @Scope(value = "prototype")
     public AMQPMessageConverter amqpMessageConverter(Serializer serializer) {
